@@ -1,0 +1,62 @@
+---
+layout: post
+title: Joining a Vector And Splitting String In C++
+date: '2010-03-11T11:10:00.018+02:00'
+author: Juri Timošin
+tags:
+- C++
+modified_time: '2010-07-09T14:14:05.094+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-6760163685100139
+blogger_orig_url: http://dracoater.blogspot.com/2010/03/joining-vector-and-splitting-string-in.html
+---
+
+<p>We need these two opposite operations more or less often. As C++ stl does not provide us these functions, we need to write them ourselves.</p>
+<pre><code class="cpp">template &lt;class T&gt;
+string vector_join( const vector&lt;T&gt;&amp; v, const string&amp; token ){
+  ostringstream result;
+  for (typename vector&lt;T&gt;::const_iterator i = v.begin(); i != v.end(); i++){
+    if (i != v.begin()) result &lt;&lt; token;
+    result &lt;&lt; *i;
+  }
+  return result.str();
+}
+
+vector&lt;string&gt; string_split( const string&amp; s, const string&amp; delimiter ){
+  vector&lt;string&gt; result;
+  string::size_type from = 0;
+  string::size_type to = 0;
+
+  while ( to != string::npos ){
+    to = s.find( delimiter, from );
+    if ( from &lt; s.size() &amp;&amp; from != to ){
+      result.push_back( s.substr( from, to - from ) );
+    }
+    from = to + delimiter.size();
+  }
+  return result;
+}</code></pre>
+<p>The functions produce the following results:</p>
+<pre><code class="cpp">string ss[] = { "qwerty", "hello", "world" };
+vector&lt;string&gt; v( ss, ss+3 );
+vector_join( v, ", ") );//"qwerty, hello, world"
+
+int ii[] = { 111, 222, 333 };
+vector&lt;int&gt; vi( ii, ii+3 );
+vector_join( vi, "; ") );//"111; 222; 333"
+
+string_split( "qwerty, hello, world", ", " );
+//results in [ "qwerty", "hello", "world" ]
+string_split( ", , wow, , qwerty, hello, world, ", ", " );
+//results in [ "wow", "qwerty", "hello", "world" ]</code></pre>
+<p>If we have a <i>space</i> as delimiter, we can split string more efficient way and even make use of templates too</p>
+<pre><code class="cpp">template &lt;class T&gt;
+vector&lt;T&gt; string_split( const string& s ){
+  vector&lt;T&gt; result;
+  istringstream ss(s);
+  copy( istream_iterator&lt;T&gt;(ss), istream_iterator&lt;T&gt;(), 
+        back_inserter( result ) );
+  return result;
+}</code></pre>
+<p>And the tests:</p>
+<pre><code class="cpp">string_split&lt;float&gt;( "11.1 22.2 33.3" );//[ 11.1, 22.2, 33.3 ]
+string_split&lt;int&gt;( "111 222 333" );//[ 111, 222, 333 ]</code></pre>

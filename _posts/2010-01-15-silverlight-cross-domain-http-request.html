@@ -1,0 +1,17 @@
+---
+layout: post
+title: Silverlight Cross-Domain Http Request Results Into Security Exception
+date: '2010-01-15T12:21:00.004+02:00'
+author: Juri Timošin
+tags:
+- Silverlight
+modified_time: '2010-07-26T16:11:23.163+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-8419396793983783410
+blogger_orig_url: http://dracoater.blogspot.com/2010/01/silverlight-cross-domain-http-request.html
+---
+
+<p>That is because cross-domain http requests are restricted in Silverlight. One has to add a crossdomain.xml into web service provider root folder with the following lines.</p><pre><code class="xml">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE cross-domain-policy SYSTEM "http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd"&gt;
+&lt;cross-domain-policy&gt;
+ &lt;allow-access-from domain="*" /&gt;
+&lt;/cross-domain-policy&gt;</code></pre><p>For more info see <a class="external" href="http://msdn.microsoft.com/en-us/library/cc645032%28VS.95%29.aspx" >Network Security Access Restrictions in Silverlight</a>.</p>

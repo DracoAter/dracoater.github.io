@@ -1,0 +1,24 @@
+---
+layout: post
+title: Array To String
+date: '2009-06-07T19:18:00.011+03:00'
+author: Juri Timošin
+tags:
+- C#
+modified_time: '2010-08-02T13:13:58.785+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-5355788565992592633
+blogger_orig_url: http://dracoater.blogspot.com/2009/06/stringjoinstring-string.html
+---
+
+<p>Oh, how I hate <a class="external" href="http://msdn.microsoft.com/en-us/library/57a79xd0.aspx">String.join(string, string[])</a> in mscorlib. And it is because of string[] argument. Why couldn't they make it accept array of objects and, before joining, cast every object with ToString() method?</p>
+<p>Had to make it myself:</p>
+<pre><code class="c-sharp">public string ListJoin&lt;T&gt;(string separator, T[] objs)//C# v3
+{
+  return string.Join(separator, Array.ConvertAll(objs, item => item.ToString()));
+}
+
+public string ListJoin&lt;T&gt;(string separator, T[] objs)//C# v2
+{
+  return string.Join(separator, Array.ConvertAll&lt;T,string&gt;(value, new Converter&lt;T,string&gt;(delegate(T i){return i.ToString();})));
+}
+</code></pre>

@@ -1,0 +1,71 @@
+---
+layout: post
+title: Determine If Number Is Prime
+date: '2010-08-18T22:27:00.007+03:00'
+author: Juri Timošin
+tags:
+- Lisp
+- algorithm
+- book
+modified_time: '2010-08-19T14:12:41.476+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-7817686641859526717
+blogger_orig_url: http://dracoater.blogspot.com/2010/07/determine-if-number-is-prime.html
+---
+
+<p>The SICP book is still being read...</p>
+<p>Now I am going to introduce some algorithms that allow us to say whether the number is prime or not. Again we will start from the simplest one.</p>
+<p>Take numbers 1 by 1 starting from 2 to √n and check, if it divides n. The complexity of the algorithm is Θ(√n).</p>
+<pre><code class="lisp">(define (prime? n)
+  (define (divides? k)
+    (= (remainder n k) 0))
+  (define (find-divisor n test)
+    (cond ((&gt; (sqr test) n) n)
+          ((divides? test) test)
+          (else (find-divisor n (+ test 1)))))
+
+  (= n (find-divisor n 2)))
+</code></pre>
+<h3>Fermat Primality Test</h3>
+<p>There is a test for primality with Θ(log(n)) complexity. It is based on <a class="external" href="http://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat little theorem</a>.</p>
+<center><pre>a<sup>n</sup> ≡ a (mod n), where 1 ≤ a &lt; n</pre></center>
+<p>Which means, that if n is prime, then for any integer <code>a</code>, <code>a<sup>n</sup> − a</code> will be evenly divisible by n.</p>
+<pre><code class="lisp">;this procedure calculates base<sup>exp</sup> mod m without using big numbers
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp) (remainder (sqr (expmod base (/ exp 2) m)) m))
+        (else (remainder (* base (expmod base (- exp 1) m)) m))))
+
+(define (fermat-test n)
+  (define (try-it a)
+    (= (expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))</code></pre>
+<p>Unfortunately there are some issues with this test - it is probabilistic. If the test fails, n is certainly composite. But if it passes, it does not guarantee that n is prime, although it shows high probability for n to be. So we can run as many tests as we need to make the mistake probability as low as possible.</p>
+<pre><code class="lisp">(define (fermat-prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fermat-prime? n (- times 1)))
+        (else false)))
+</code></pre>
+<p>Unfortunately that is not all. There are some numbers that pass the test (for every <code>a</code>!), without being prime. These are called <a class="external" href="http://en.wikipedia.org/wiki/Carmichael_number">Carmichael numbers</a>. So to determine, if <code>n</code> is prime, we need to check if it passes the Fermat test and is not a Carmichael number, or use a similar <a class="external" href="http://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test">Miller–Rabin primality test</a>, that cannot be tricked.</p>
+<h3>Miller–Rabin Primality Test</h3>
+It starts from an alternate form of Fermat's Little Theorem:</p>
+<center><pre>a<sup>n-1</sup> ≡ 1 (mod n), where 1 ≤ a &lt; n</pre></center>
+<p>The difference is that whenever we perform the squaring step in <code>expmod</code>, we check to see if we have discovered a "nontrivial square root of 1 modulo p", that is, a number not equal to <code>1</code> or <code>n - 1</code> whose square is equal to <code>1 mod n</code>. It is possible to prove that if such a nontrivial square root of <code>1</code> exists, then <code>n</code> is not prime. It is also possible to prove that if <code>n</code> is an odd number that is not prime, then, for at least half the numbers <code>a &lt; n</code>, computing <code>a<sup>n-1</sup></code> in this way will reveal a nontrivial square root of <code>1 mod n</code>.
+<pre><code class="lisp">(define (miller-rabin-prime? n times)
+  (cond ((= times 0) true)
+        ((miller-rabin-test n) (miller-rabin-prime? n (- times 1)))
+        (else false)))
+
+(define (miller-rabin-test n)
+  (define (try-it a)
+    (= (expmod a (- n 1) n) 1))
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (expmod base exp m)
+  (define (!= x y) (not (= x y)))
+
+  (cond ((= exp 0) 1)
+        ((and (!= base 1) 
+              (!= base (- m 1)) 
+              (= (remainder( sqr base) m) 1)) 0)
+        ((even? exp) (remainder (sqr (expmod base (/ exp 2) m)) m))
+        (else (remainder (* base (expmod base (- exp 1) m)) m))))</code></pre>

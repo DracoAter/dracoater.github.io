@@ -1,0 +1,13 @@
+---
+layout: post
+title: 
+date: '2015-02-28T17:13:00.000+02:00'
+author: Juri Timošin
+tags: 
+modified_time: '2015-02-28T17:13:38.889+02:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-3290100053718264019
+blogger_orig_url: http://dracoater.blogspot.com/2015/02/blog-post.html
+---
+
+Get <br />
+<code><pre>netstat -tlpn 2>/dev/null | sed '1d;2d;s/\// /' | awk '{system("echo -n "$1" "$4"\" \" && cat /proc/"$7"/cmdline 2>/dev/null;echo")}'</pre></code>

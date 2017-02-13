@@ -1,0 +1,19 @@
+---
+layout: post
+title: Escaping Curly Bracket in String.Format()
+date: '2010-05-04T16:43:00.006+03:00'
+author: Juri Timošin
+tags:
+- C#
+modified_time: '2010-07-09T14:17:38.988+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-4842202066833284966
+blogger_orig_url: http://dracoater.blogspot.com/2010/05/escaping-curly-bracket-in-stringformat.html
+---
+
+<p>If you need to print a curly bracket in string, when using string format, just put it twice in a row.</p>
+<pre><code class="cs">string.Format("{{ "{{" }} hello world }}")//{ hello world };
+string.Format("{{ "{{" }}0}}", 45);//{0}
+string.Format("{{ "{{" }}{0}}}", 45);//{45}
+string.Format("{0:N}", 45);//45.00
+string.Format("{{ "{{" }}{0:N}}}", 45);//{N}</code></pre>
+<p>The last one is not `{45.00}`, because the parser when reading `}}}` first prints the escaped `}`, and only then closes the formatting section. And as `N}` number format does not mean anything to it, it just prints it out.</p>

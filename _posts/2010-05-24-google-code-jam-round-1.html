@@ -1,0 +1,134 @@
+---
+layout: post
+title: Google Code Jam 2010 - Round 1
+date: '2010-05-24T20:12:00.003+03:00'
+author: Juri Timošin
+tags:
+- C++
+- Google
+- Code Jam
+- Ruby
+modified_time: '2010-05-25T21:20:15.157+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-3506745905838599240
+blogger_orig_url: http://dracoater.blogspot.com/2010/05/google-code-jam-round-1.html
+---
+
+<p>Sadly I didn't qualify into Round 2. But actually didn't have any chance, because at the time I posted my first solution to the A problem, the top scorers board  was already full of 100s (That is maximum one could get for solving all 3 problems.) So as the qualifying round this one had 3 problems: A, B and C, with A being the simplest one and C the hardest one. As I participated in Round 1B, here are the thoughts on problems that I met there.</p>
+<h3>File Fix-It</h3>
+<p>(<a class="external" href="http://code.google.com/codejam/contest/dashboard?c=635101#">Problem Text</a>)</p>
+<p>This one is about creating the tree of folders and counting how many folders you have to create. The solution algorithm is simple.</p>
+<ol>
+<li>We create a root node.</li>
+<li>Read the next folder, we must create (with path).</li>
+<li>Split the path.</li>
+<li>Add folders one by one to the root node, counting how many of them we had to create.</li>
+<li>Goto 2</li>
+</ol>
+<p>Here is my c++ code.</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+
+using namespace std;
+
+class Node{
+public:
+  string name;
+  map&lt;string, Node&gt; children;
+
+  Node(){}
+  Node( string n ):name(n){}
+};
+
+vector&lt;string&gt; split( const string&amp; s, const string&amp; delimiter ){
+  vector&lt;string&gt; result;
+  string::size_type from = 0;
+  string::size_type to = 0;
+
+  while ( to != string::npos ){
+    to = s.find( delimiter, from );
+    if ( from &lt; s.size() &amp;&amp; from != to ){
+      result.push_back( s.substr( from, to - from ) );
+    }
+    from = to + delimiter.size();
+  }
+  return result;
+}
+
+int add_to_node( Node* current, vector&lt;string&gt;&amp; path ){
+  int r = 0;
+  for (int i=0; i&lt;path.size(); i++){
+    if (current-&gt;children.find(path[i]) == current-&gt;children.end()){
+      r++;
+      Node child(path[i]);
+      current-&gt;children[path[i]] = child;
+    }
+    current = &amp;( current-&gt;children[path[i]] );
+  }
+  return r;
+}
+
+int main(){
+  int t;
+  cin &gt;&gt; t;
+  for (int i=1; i&lt;=t; i++){
+    int n, m;
+    cin &gt;&gt; n &gt;&gt; m;
+    Node root(&quot;&quot;);
+    for (int j=0; j&lt;n; j++){
+      string s;
+      cin &gt;&gt; s;
+      vector&lt;string&gt; path = split( s, &quot;/&quot; );
+      //cout &lt;&lt; root.children.size();
+      add_to_node( &amp;root, path );
+    }
+    int total = 0;
+    for (int j=0; j&lt;m; j++){
+      string s;
+      cin &gt;&gt; s;
+      vector&lt;string&gt; path = split( s, &quot;/&quot; );
+      total += add_to_node( &amp;root, path );
+    }
+    cout &lt;&lt; &quot;Case #&quot; &lt;&lt; i &lt;&lt; &quot;: &quot; &lt;&lt; total &lt;&lt;endl;
+  }
+}</code></pre>
+<h3>Picking Up Chicks</h3>
+<p>(<a class="external" href="http://code.google.com/codejam/contest/dashboard?c=635101#s=p1">Problem Text</a>)</p>
+<p>This problem is about finding out how many (slow) chicks prevent one particular (fast) chick to get to the barn in time. (This solution is in ruby). My solution actually is not optimal, but it is still solving the problem.</p>
+<pre><code class="ruby">#!/usr/bin/env ruby
+
+c = ARGF.readline.to_i
+(1..c).each do |i|
+  n, k, b, t = ARGF.readline.split(&quot; &quot;).collect{|x| x.to_i }
+  x = ARGF.readline.split(&quot; &quot;).collect{|y| y.to_i }
+  v = ARGF.readline.split(&quot; &quot;).collect{|y| y.to_i }
+
+  times = []
+  x.each_index do |j|
+    d = b-x[j]
+    times &lt;&lt; ( d % v[j] == 0 ? d / v[j] : d / v[j] + 1 )
+  end
+
+  chicks = 0
+  max = 0
+  swaps = 0
+
+  times.reverse!
+  times.each_index do |ti|
+    max = times[ti] &gt; max ? times[ti] : max
+    if t &gt;= max
+      chicks += 1
+    elsif t &gt;= times[ti]
+      chicks += 1
+      #we need to swap only with those chicks that will arrive later and won't get in time
+      swaps += times[0...ti].collect{|one| one &gt; times[ti] &amp;&amp; one &gt; t ? one : nil }.compact.count
+    end
+    break if chicks &gt;= k
+  end
+
+  print( &quot;Case #&quot;, i,&quot;: &quot;, (chicks &gt;= k ? swaps : &quot;IMPOSSIBLE&quot;), &quot;\n&quot; )
+end</code></pre>
+<h3>Your Rank is Pure</h3>
+<p>(<a class="external" href="http://code.google.com/codejam/contest/dashboard?c=635101#s=p2&a=2">Problem Text</a>)</p>
+<p>I ran out of time before I even could understand what this problem was all about. So i cannot tell anything about it. I will try to solve it later though.</p>
+<p>I have also checked out the <a class="external" href="http://code.google.com/codejam/contest/dashboard?c=635101#s=a&a=0">official solutions</a> for the first 2 problems, and they appear to be much cleaner and simpler than mine. My approach is too straightforward. Have to practice more...</p>

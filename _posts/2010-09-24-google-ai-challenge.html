@@ -1,0 +1,27 @@
+---
+layout: post
+title: Google AI Challenge
+date: '2010-09-24T13:37:00.000+03:00'
+author: Juri Timošin
+tags:
+- AI
+- contest
+- Google
+modified_time: '2010-09-24T13:37:47.614+03:00'
+thumbnail: http://1.bp.blogspot.com/_13GxZrI8up4/TJx9pOjzPuI/AAAAAAAAC_A/LtR9Xi00h3E/s72-c/PlanetWars.png
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-6491856752922808082
+blogger_orig_url: http://dracoater.blogspot.com/2010/09/google-ai-challenge.html
+---
+
+<p>University of Waterloo Computer Science Club organized <a href="http://ai-contest.com/">AI Contest</a>, sponsored by Google. Contestants are asked to create a bot that plays PlanetWars game, which is based on <a href="http://www.galcon.com/">GalCon</a>. The game field consists of several planets, that are occupied by one of the players or neutral. Planets produce ships (bigger planets do it quicker) players use to conquer new planets. The goal is to beat the other player.</p>
+<center><a href="http://1.bp.blogspot.com/_13GxZrI8up4/TJx9pOjzPuI/AAAAAAAAC_A/LtR9Xi00h3E/s1600/PlanetWars.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="640" src="http://1.bp.blogspot.com/_13GxZrI8up4/TJx9pOjzPuI/AAAAAAAAC_A/LtR9Xi00h3E/s640/PlanetWars.png" width="616" /></a></center>
+<p>I am also taking part in the tournament and, francly speaking, doing well. Currently I am around 200th place (username: <a href="http://ai-contest.com/profile.php?user_id=8308">2stupidogs</a>) in total ranking and one of the best in Estonia. Here are some strategy thoughts I can share with you as the starting point. These were used by my first 2 bots. (Now I have implemented a more deeper algorithm.) The organisers provide everyone with default strategy bot, that can we further improved. And by making the following small improvements you can make top 500 easily.</p>
+<p>Default bot finds his strongest planet and sends half of the fleet from it to the near planet, that it considers to be weak.</p>
+<ol>
+<li>First change is to send as many ships as needed to conquer the planet, not just the half.</li>
+<li>Then change the planet score formula (Determines how weak enemy planet is). It should depend on distanse, growth rate and current fleet on the planet. For example, count in how many days the new planet will regenerate the fleet you had to use to conquer it. The less it takes, the better the planet for you.</li>
+<li>Don't send fleet to the planet where is was sent already. (Well, this is doubtable, but you can try.)</li>
+<li>Make a list of weakest planets for your strongest planet (not just the one weakest planet), and send a fleet to all of them as soon as you have enough ships.</li>
+<li>Make a list of your strongest planets and look for weakest planets for every of them.</li>
+</ol>
+<p>Just implementing this strategy I managed to make into top 350 list, but it was less contestants then.</p>

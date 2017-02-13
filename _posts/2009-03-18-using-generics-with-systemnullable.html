@@ -1,0 +1,43 @@
+---
+layout: post
+title: Using Generics With System.Nullable<T>
+date: '2009-03-18T12:41:00.009+02:00'
+author: Juri Timošin
+tags:
+- C#
+modified_time: '2010-08-02T13:24:59.784+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-4352392089429377166
+blogger_orig_url: http://dracoater.blogspot.com/2009/03/using-generics-with-systemnullable.html
+---
+
+<p>When we have a Nullable type value and we want to assign it to some control, then we need to check if is not null first.</p>
+
+<pre><code class="c-sharp">SomeLabel.Text = object.MyProperty.HasValue ? object.MyProperty.Value : String.Empty;
+</code></pre>
+
+<p>But if we have many nullable properties? I don't want to copy/paste this check on every line. So we need a method, that checks for nulls. But I also don't want several methods for every type. So we need to use generics.</p>
+
+<p>I created some methods for myself</p>
+
+<pre><code class="c-sharp">public static string ValueOrEmptyString&lt;T&gt;(Nullable&lt;T&gt; obj) where T : struct
+{
+  return obj.HasValue ? obj.Value.ToString() : "";
+}
+
+public static T ValueOrDefault&lt;T&gt;(Nullable&lt;T&gt; obj, T defaultValue) where T : struct
+{
+  return obj.HasValue ? obj.Value : defaultValue;
+}
+
+public static T ValueOrDefault&lt;T&gt;(Nullable&lt;T&gt; obj) where T : struct
+{
+  return obj.HasValue ? obj.Value : default(T);
+}
+</code></pre>
+<p>"where T : struct" - is needed for compiler to understand that this method is allowed only for types that belong to System.ValueType.</p>
+
+<p>I can use these methods like that</p>
+<pre><code class="c-sharp">SomeLabel.Text = ValueOrEmptyString&lt;int&gt;( object.MyIntProperty );
+SomeDateTimeControl.Date = ValueOrDefault&lt;DateTime&gt;( object.MyDateTimeProperty );
+SomeReferenceControl.SelectedObjecId = ValueOrDefault&lt;int&gt;( object.MyIntProperty, -1 );
+</code></pre>

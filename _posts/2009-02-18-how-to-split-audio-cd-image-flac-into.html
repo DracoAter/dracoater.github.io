@@ -1,0 +1,18 @@
+---
+layout: post
+title: How To Split Audio CD Image (.flac) Into Several Tracs In Ubuntu
+date: '2009-02-18T12:12:00.009+02:00'
+author: Juri Timošin
+tags:
+- audio
+- Ubuntu
+modified_time: '2011-04-21T09:54:16.522+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-1082424743774753007
+blogger_orig_url: http://dracoater.blogspot.com/2009/02/how-to-split-audio-cd-image-flac-into.html
+---
+
+<pre><code class="bash">$ sudo apt-get install cuetools shntool flac #install needed tools
+$ cuebreakpoints sample.cue | shnsplit -o flac sample.flac #read breakpoints from cue and give them to splitter
+$ cuetag sample.cue split-track*.flac #add tags to newly created files
+</code></pre>
+More info is <a class="external" target="_blank" href="http://stillstup.blogspot.com/2008/07/split-lossless-audio-ape-flac-wv-wav-by.html">there</a>.

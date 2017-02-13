@@ -1,0 +1,17 @@
+---
+layout: post
+title: C# Function That Mimics SQL IN-operator
+date: '2010-07-14T17:32:00.001+03:00'
+author: Juri Timošin
+tags:
+- C#
+modified_time: '2013-04-09T16:41:38.384+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-1963313926516272654
+blogger_orig_url: http://dracoater.blogspot.com/2010/07/c-function-that-mimics-sql-in-operator.html
+---
+
+<p>A <a href="http://stackoverflow.com/q/3244333/170230" class="external">good question</a> was asked on stackoverflow, and an even better answer received.</p><p>How can we rewrite the condition</p><pre><code class="cs">if (a == x || a == y || a == z)</code></pre><p>to make it more readable?</p><p>The answer is</p><pre><code>public static bool IsIn&lt;T&gt;(this T obj, params T[] collection) {
+   return collection.Contains(obj);
+}
+
+if (a.IsIn(x, y, z))</code></pre><p>PS. Sorry for such a long period with no posting. You know, summer, Sun, beach, sea, +30 and vacation.</p>

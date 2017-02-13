@@ -1,0 +1,24 @@
+---
+layout: post
+title: Replacing Text In Html (Outside Html Tags)
+date: '2010-05-20T12:53:00.001+03:00'
+author: Juri Timošin
+tags:
+- regex
+- C#
+modified_time: '2010-05-20T12:54:35.927+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-8180480451207596233
+blogger_orig_url: http://dracoater.blogspot.com/2010/05/replacing-text-in-html-outside-html.html
+---
+
+<pre><code class="csharp">private const string OUTSIDE_TAG_LOOKAHEAD = "(?![^&lt;]+&gt;)";
+
+public static string HighlightWordsInHtmlText( string htmlText, params string[] words ){
+  if (words == null || string.IsNullOrEmpty(htmlText) ) return htmlText;
+  Regex regex = new Regex(OUTSIDE_TAG_LOOKAHEAD + "("+ string.Join("|", words) +")", RegexOptions.IgnoreCase);
+  return regex.Replace(htmlText, "&lt;span class=\"highlight\"&gt;$&amp;&lt;/span&gt;" );
+}</code></pre>
+OUTSIDE_TAG_LOOKAHEAD - uses <a class="external" href="http://www.regular-expressions.info/lookaround.html">regular expression magic</a>, that matches text inside tags, but as it is negated, the text matched is really outside of html tags.<br />
+$&amp; - <a class="external" href="http://www.regular-expressions.info/dotnet.html">refers to the current match</a>. We cannot put here any word as we don't precisely know what of them was found and in what case.<br />
+This example matches also <i>tron</i> in <i>s<b>tron</b>g</i>, if you need an exact match add word boundaries like that:<br />
+<pre><code class="csharp">OUTSIDE_TAG_LOOKAHEAD + "\\b("+ string.Join("|", words) +")\\b"</code></pre>

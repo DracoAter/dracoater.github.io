@@ -1,0 +1,20 @@
+---
+layout: post
+title: Ajax With InnerHTML()
+date: '2009-06-22T12:50:00.004+03:00'
+author: Juri Timošin
+tags:
+- AJAX
+modified_time: '2010-08-02T13:11:11.965+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-2182155434875251869
+blogger_orig_url: http://dracoater.blogspot.com/2009/06/ajax-with-innerhtml.html
+---
+
+<p>InnerHTML is not a standard, but it is more useful comparing to working with DOM with such functions as createElement and/or appendChild. But there is a problem with it: if you need further to handle the new added data (to refer new elements, to change/add their attributes), innerHTML is not good at all, as innerHTML simply visually adds new elements, but it does not really insert them in the DOM structure of the document. Attempting to do a document.getElementById() on a tag inside of code that was added using innerHTML just doesn't work. At least it didn't work for me in Firefox 3.</p>
+<p>The folowing code can be accepted as the workaround.</p>
+<pre><code class="javascript">var newDiv = document.createElement("div");//create new div
+newDiv.innerHTML = xhr.responseText;//add response into new div
+var container = document.getElementById("container");//find place where the response should be placed to
+container.parentNode.insertBefore(newDiv, container);//add new div before the container
+newDiv.parentNode.removeChild(container);//remove container</code></pre>
+<p>This way we get the same resulting document, but we can further work with DOM.</p>

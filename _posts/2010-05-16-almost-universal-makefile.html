@@ -1,0 +1,39 @@
+---
+layout: post
+title: "[Almost] Universal Makefile"
+date: '2010-05-16T15:25:00.006+03:00'
+author: Juri Timošin
+tags:
+- C++
+- makefile
+modified_time: '2010-07-09T14:18:21.644+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-5842363960466973211
+blogger_orig_url: http://dracoater.blogspot.com/2010/05/almost-universal-makefile.html
+---
+
+<pre><code class="bash">#compiler
+CC=g++
+#compiler options
+OPTS=-c -Wall
+#source files
+SOURCES=$(wildcard *.cc SomePath/*.cc )
+#object files
+OBJECTS=$(SOURCES:.cc=.o)
+#sdl-config or any other library here. 
+#``- ensures that the command between them is executed, and the result is put into LIBS
+LIBS=`sdl-config --cflags --libs`
+#executable filename
+EXECUTABLE=Main.run
+#Special symbols used:
+#$^ - is all the dependencies (in this case =$(OBJECTS) )
+#$@ - is the result name (in this case =$(EXECUTABLE) )
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+ $(LINK.o) $^ -o $@ $(LIBS)
+
+clean:
+ rm $(EXECUTABLE) $(OBJECTS)</code></pre>
+<p>It is hard to say why it works, but it works. "Make" uses hidden rules to compile object files from sources.</p>
+<p>See there for more (in Russian): <a class="external" href="http://abuse.edu.ioffe.ru/cluster/makeman">http://abuse.edu.ioffe.ru/cluster/makeman</a> or read the manual :)</p>

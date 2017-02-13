@@ -1,0 +1,27 @@
+---
+layout: post
+title: How To Get Last Inserted Row ID In PostgreSQL
+date: '2010-02-06T21:26:00.003+02:00'
+author: Juri Timošin
+tags:
+- PostgreSql
+modified_time: '2010-07-09T14:20:54.610+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-2609518826705609730
+blogger_orig_url: http://dracoater.blogspot.com/2010/02/how-to-get-last-inserted-row-id-in.html
+---
+
+<p>Imagine we have a test table.</p>
+<pre><code class="sql">CREATE TABLE test (id SERIAL, name TEXT);</code></pre>
+<p>Use the RETURNING statement in the INSERT statement.</p>
+<pre><code class="sql">INSERT INTO test (name) VALUES ('My Name') RETURNING id;
+
+ id 
+----
+  1 
+
+INSERT INTO test (name) VALUES ('My Name 1') RETURNING id;
+
+ id 
+----
+  2 </code></pre>
+<p>More info in <a href="http://www.postgresql.org/docs/8.2/static/sql-insert.html" class="external">Postgres manual.</a></p>

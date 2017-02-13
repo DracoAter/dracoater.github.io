@@ -1,0 +1,70 @@
+---
+layout: post
+title: 'SICP: The 8 queens puzzle'
+date: '2010-12-14T22:59:00.000+02:00'
+author: Juri Timošin
+tags:
+- Lisp
+- book
+modified_time: '2010-12-14T22:59:03.579+02:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-3805340855288549511
+blogger_orig_url: http://dracoater.blogspot.com/2010/12/sicp-8-queens-puzzle.html
+---
+
+<p>The Google AI Contest is over and now I continue to read the SICP book. Now we are solving the famous <a href="http://en.wikipedia.org/wiki/Eight_queens_puzzle" class="external">8 queens puzzle</a>. One way to solve the puzzle is to work across the board, placing a queen in each column. Once we have placed k - 1 queens, we must place the k<sup>th</sup> queen in a position where it does not check any of the queens already on the board. We can formulate this approach recursively: Assume that we have already generated the sequence of all possible ways to place k - 1 queens in the first k - 1 columns of the board. For each of these ways, generate an extended set of positions by placing a queen in each row of the kth column. Now filter these, keeping only the positions for which the queen in the kth column is safe with respect to the other queens. This produces the sequence of all ways to place k queens in the first k columns. By continuing this process, we will produce not only one solution, but all solutions to the puzzle. We implement this solution as a procedure queens, which returns a sequence of all solutions to the problem of placing n queens on an n×n chessboard.</p>
+<p>In the beginning we are given this procedure.</p>
+<pre><code class="lisp">(define (queens board-size)
+  (define (queen-cols k)
+    (if (= k 0)
+        (list empty-board)
+        (filter
+         (lambda (positions) (safe? k positions))
+         (flatmap
+          (lambda (rest-of-queens)
+            (map (lambda (new-row)
+                   (adjoin-position new-row k rest-of-queens))
+                 (enumerate-interval 1 board-size)))
+          (queen-cols (- k 1))))))
+  (queen-cols board-size))
+</code></pre>
+<p>and we need to write all the sub-procedures that are used by the main one. Let's start from the simplest one.</p>
+<pre><code class="lisp">(define empty-board '())</code></pre>
+<p>Next task is to write the <code>safe?</code> function. This should determine for a set of positions, whether the queen in the k<sup>th</sup> column is safe with respect to the others. I decided to split it into three procedures. 1 checks the horizontal line, one diagonal up and the other diagonal down. We don't actually need the k argument, as we should always check the last queen only. I use reversed-positions as we are starting from the last queen and going to the first one.</p>
+<pre><code class="lisp">(define (safe? k positions)
+  (let ((reversed-positions (reverse positions))
+        (last (car (reverse positions))))
+  (and (horizontal-safe? last (cdr reversed-positions))
+       (diagonal-up-safe? last (cdr reversed-positions))
+       (diagonal-down-safe? last (cdr reversed-positions)))))
+
+(define (horizontal-safe? q positions)
+  (if (null? positions)
+      true
+      (and (not (= (car positions) q))
+           (horizontal-safe? q (cdr positions)))))
+
+(define (diagonal-up-safe? q reversed-positions)
+  (if (null? reversed-positions)
+      true
+      (and (not(= (car reversed-positions) (+ q 1)))
+           (diagonal-up-safe? (+ q 1) (cdr reversed-positions)))))
+
+(define (diagonal-down-safe? q reversed-positions)
+  (if (null? reversed-positions)
+      true
+      (and (not(= (car reversed-positions) (- q 1)))
+           (diagonal-down-safe? (- q 1) (cdr reversed-positions)))))</code></pre>
+<p>The remaining procedures are much easier to write. <code>flatmap</code> should join all the lists, that represent queens on board, into one big list. <code>enumerate-interval</code> just returns a list with values between <code>low</code> and <code>high</code>. <code>adjoin-position</code> just adds new queen to the existing ones.</p>
+<pre><code class="lisp">(define (flatmap proc lst)
+  (foldr append '() (map proc lst)))
+
+(define (enumerate-interval low high)
+  (if (> low high)
+      '()
+      (append (list low) (enumerate-interval (+ low 1) high))))
+
+(define (adjoin-position new-row k rest-of-queens)
+  (append rest-of-queens (list new-row)))</code></pre>
+<p>As you can see, there are some parameters in procedures that are not used. They can be safely removed.</p>
+<pre><code>(queens 8)</code></pre>
+<p>Returns 92 solutions - which is right.</p>

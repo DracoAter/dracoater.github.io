@@ -1,0 +1,35 @@
+---
+layout: post
+title: Mercurial In Ubuntu
+date: '2011-04-21T17:03:00.000+03:00'
+author: Juri Timošin
+tags:
+- Ubuntu
+- Mercurial
+modified_time: '2011-04-21T17:03:39.229+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-4482799105975146622
+blogger_orig_url: http://dracoater.blogspot.com/2011/04/mercurial-in-ubuntu.html
+---
+
+<p>Since I have moved to <a href="http://www.zeroturnaround.com/" class="external">ZeroTurnaround</a> I had to learn a lot of new and interesting things. Most of them are very simple to write about, but as time passes I finally thought up the things, I could share with you.</p>
+<p>We use <a class="external" href="http://mercurial.selenic.com/">Mercurial</a> as SCM. So here is a small tip for ubuntu users how to configure hg.</p>
+<p>Mercurial is available to install through repository</p>
+<pre><code class="bash">$ sudo aptitude install mercurial</code></pre>
+<p>So now as it is installed, we can configure it. Mercurial reads configuration data from several files, if they exist. To list them use:</p>
+<pre><code class="bash">$ hg help config</code></pre>
+<p>Now we will edit the <code>$HOME/.hgrc</code> file to add there some user information, authentication and enable plugins. A <a class="external" href="http://www.selenic.com/mercurial/hgrc.5.html">configuration file consists of sections</a>, led by a <code>[section]</code> header and followed by <code>name = value</code> entries (sometimes called <i>configuration keys</i>)</p>
+<pre><code class="ini">[ui]
+username = Firstname Lastname &lt;firstname.lastname@example.net&gt;</code></pre>
+<p>Here we introduced ourselves. The section is <code><a class="external" href="http://www.selenic.com/mercurial/hgrc.5.html#ui">[ui]</a></code> and ui.username is typically a person's name and email address. If this field is not declared in hgrc, you will have to enter it manually every time you commit.</p>
+<pre><code class="ini">[auth]
+foo.prefix=*
+foo.username=firstname.lastname@example.net
+foo.password=SecretPassword123</code></pre>
+<p>The <code><a class="external" href="http://www.selenic.com/mercurial/hgrc.5.html#auth">[auth]</a></code> section allows you to store credentials for http authentication, I hate entering username and password every time I pull or push. You can store several different credentials for different servers here. They will be grouped by the part before the . (full stop, <i>foo</i> - in my example). And the auth.prefix will determine, which credentials should be used for what http address. It should be either * or a URI with or without the scheme part. In my example 1 and the same credentials are used for all addresses.</p>
+<pre><code class="ini">[extensions]
+fetch = 
+color =
+#this extension will get loaded from the file specified
+myfeature = ~/.hgext/myfeature.py</code></pre>
+<p>Mercurial has an extension mechanism for adding new features. To enable an extension, create an entry for it in <code><a class="external" href="http://www.selenic.com/mercurial/hgrc.5.html#extensions">[extensions]</a></code> section. There is a <a class="external" href="http://mercurial.selenic.com/wiki/UsingExtensions">list of extensions</a> for Mercurial and you can <a class="external" href="http://mercurial.selenic.com/wiki/WritingExtensions">write one yourself</a>. Extensions bundled with Mercurial does not need anything after the <i>equals</i> sign, but you need to provide the full path to others.</p>
+<p>Now that we have configured it a little bit, we can start using. <a class="external" href="http://hginit.com/">Mercurial tutorial</a> by <a class="external" href="http://www.joelonsoftware.com/">Joel Spolsky</a> will teach you, how.</p>

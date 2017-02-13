@@ -1,0 +1,22 @@
+---
+layout: post
+title: Convert Different Audio In Command Line in Ubuntu
+date: '2009-09-16T11:15:00.002+03:00'
+author: Juri Timošin
+tags:
+- audio
+- Ubuntu
+modified_time: '2010-07-09T14:38:21.137+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-7636763162392778005
+blogger_orig_url: http://dracoater.blogspot.com/2009/09/convert-different-audio-in-command-line.html
+---
+
+<p>Converting different audio formats in Ubuntu is quite an easy task. Just start Soundconverter, or first install it, if you don't have.</p>
+<pre><code class="bash">sudo apt-get install soundconverter</code></pre>
+<p>But I needed to do it in command line. Soundconverter can do it either. (What a good boy!) But you just need to know the mime-type of the output file (simply adding the desired suffix doesn't work). For example, to convert "my_favourite mp3" to wav you can use:</p>
+<pre><code class="bash">soundconverter -b -m audio/x-wav -s .wav my_favourite.mp3</code></pre>
+<p>See the <a href="http://www.feedforall.com/mime-types.htm" class="external">full list of mime types</a>.</p>
+<p>For the available options see</p>
+<pre><code class="bash">soundconverter -h</code></pre>
+<p>or</p>
+<pre><code class="bash">man soundconverter</code></pre>

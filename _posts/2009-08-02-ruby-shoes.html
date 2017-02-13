@@ -1,0 +1,53 @@
+---
+layout: post
+title: Ruby Shoes
+date: '2009-08-02T13:15:00.000+03:00'
+author: Juri Timošin
+tags:
+- Ruby
+- Shoes
+modified_time: '2010-08-02T13:30:11.800+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-7015190723637130870
+blogger_orig_url: http://dracoater.blogspot.com/2009/05/ruby-shoes.html
+---
+
+<p>I wanted to try ruby Shoes already long ago, but just didn't know what to start with. Until I found a <a class="external" href="http://quiteuseful.co.uk">quiteuseful</a> article about <a class="external" href="http://quiteuseful.co.uk/post/94473551/lets-make-a-game-wrap-up">making a game</a> on ruby shoes. I tried it and it was unexpectedly easy. Here are some my subjective thoughts about it.</p>
+<p>Good things:</p>
+<dl>
+<dt>It is very easy to study.</dt>
+<dd>One can begin writing using shoes quite quickly and straightforward. No big manuals or hardly understandable api and howtos.</dd>
+<dt>It is cute. :)</dt>
+<dd>Yes, I really liked it. Different objects are created very easy, such as:
+<pre><code class="ruby">Shoes.app { button("Click me!") { alert("Good job.") } }</code></pre>
+You also can draw with provided <i>rect</i>, <i>oval</i> or even <i>arrow</i> methods or import an image as a background. Motion ability is also provided:
+<pre><code class="ruby">Shoes.app do #A star that moves after the mouse pointer.
+  @shape = star :points => 5
+  motion do |left, top|
+    @shape.move left, top
+  end
+end</code></pre>
+</dd>
+</dl>
+Unfortunately there were also some disadvantages:
+<dl>
+<dt>The whole Shoes application should be in Shoes.app block.</dt>
+<dd>Seem to me to be a little bit uncomfortable.</dd>
+<dt>You have to pass everywhere app variable that denotes the Shoes application.</dt>
+<dd>Well, not just everywhere... But if you create your own class, which objects have to be drawn you also have to pass the application variable, or make it global, which is not really good pattern.
+<pre><code class="ruby">class RedRect
+
+  def initialize( app )
+    app.fill red
+    app.rect :left => 10, :top => 10, :width => 40 
+  end
+end
+
+Shoes.app do
+  RedRect.new( self )
+end
+</code></pre>
+</dd>
+<dt>Pity, but it is slow.</dt>
+<dd>The resulting snake in the game responds in about 2 seconds. It is a long period of time, especially on higher levels with higher speed.</dd>
+</dl>
+<p>In conclusion the authors' words about Shoes are right:"Shoes is a tiny graphics toolkit, designed for beginners". It can be used to create quickly a small application, where speed is not essential.</p>

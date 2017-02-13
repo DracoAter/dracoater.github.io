@@ -1,0 +1,67 @@
+---
+layout: post
+title: Add List To App.Config
+date: '2009-11-15T00:54:00.008+02:00'
+author: Juri Timošin
+tags:
+- C#
+modified_time: '2010-07-09T14:37:25.862+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-8550259797637911103
+blogger_orig_url: http://dracoater.blogspot.com/2009/11/add-list-to-appconfig.html
+---
+
+<p>One can add list and not only a list to App.Config file of the .Net project. That can be done by declaring your own configuration element, say a ProductElement</p>
+<pre><code class="cs">class ProductElement : ConfigurationElement
+{
+  [ConfigurationProperty("name", IsKey=true, IsRequired=true)]
+  public string Name
+  {
+    get { return this["name"]; }
+  }
+
+  [ConfigurationProperty("price")]
+  public int Price
+  {
+    get { return Convert.ToInt32(this["price"]); }
+  }
+}
+
+class ProductElementCollection : ConfigurationElementCollection
+{
+  protected override ConfigurationElement CreateNewElement()
+  {
+    return new ProductElement();
+  }
+
+  protected override object GetElementKey(ConfigurationElement element)
+  {
+    return ((ProductElement)element).Name;
+  }
+}
+
+class ProductConfigurationSection : ConfigurationSection
+{
+   [ConfigurationProperty("products")]
+   public ProductElementCollection Products
+   {
+      get { return (ProductElementCollection)this["products"]; }
+   }
+}
+</code></pre>
+<p>Use it in your app.config like that:</p>
+<pre><code class="xml">&lt;configuration&gt;
+   &lt;configSections&gt;
+      &lt;section name="productConfigurationSection"
+        type="MyNamespace.ProductConfigurationSection, MyAssembly" 
+        requirePermission="false" /&gt;
+   &lt;/configSections&gt;
+   &lt;productConfigurationSection&gt;
+      &lt;products&gt;
+         &lt;add name="car" price="750000" /&gt;
+         &lt;add name="milk" price="13" /&gt;
+      &lt;/products&gt;
+   &lt;/productConfigurationSection&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>Note that Name is used as a key, so you cannot create 2 Products with the same name. But you can add more fields to the Product, just mark them accordingly. And from code you can access this section with:</p>
+<pre><code class="cs">ProductConfigurationSection section = (ProductConfigurationSection) ConfigurationManager.GetSection("productConfigurationSection");</code></pre>

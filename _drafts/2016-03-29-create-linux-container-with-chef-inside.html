@@ -1,0 +1,29 @@
+---
+layout: post
+title: Create a Linux Container With Chef Inside
+date: '2016-03-29T08:07:00.001+03:00'
+author: Juri Timošin
+tags: 
+modified_time: '2016-03-29T08:07:37.955+03:00'
+blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-4549178375703767815
+blogger_orig_url: http://dracoater.blogspot.com/2016/03/create-linux-container-with-chef-inside.html
+---
+
+<p dir="ltr" style="text-align: left;" trbidi="on">We have downloaded an ubuntu image and have it locally.</p><br />
+<pre><code>$ lxc init lxd:ubuntu/trusty/i386 c1
+$ lxc start c1
+$ lxc exec c1 -- apt-get update
+$ lxc exec c1 -- apt-get install -y ruby2.0 ruby2.0-dev build-essential
+$ lxc exec c1 -- gem2.0 update --system
+$ lxc exec c1 -- gem2.0 install chef:12.4.1 -N --verbose
+
+
+lxc exec c1 -- apt-get purge build-essential
+lxc exec c1 -- apt-get autoremove
+lxc exec c1 -- apt-get clean
+lxc exec c1 -- apt-get autoclean -y
+
+lxc stop c1
+lxc publish c1 --alias=trusty
+</code></pre><br />
+https://gist.github.com/carlessanagustin/2fb92e88f2068300a2ed<br />

@@ -1,0 +1,6 @@
+<h2>Tags</h2>
+{% assign tags = (site.tags | sort:0) %}
+{% for tag in tags %}
+  <p>{{ tag }}
+  <a href="{{ site.baseurl}}/tag/{{ tag[0] }}" data-toggle="tooltip" data-placement="right" title="{{ tag[1].size }}">{{tag[0] }}</a> ({{ tag[1].size }})
+{% endfor %}
