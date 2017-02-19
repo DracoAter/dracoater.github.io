@@ -1,5 +1,5 @@
 <h2>Tags</h2>
 {% assign tags = (site.tags | sort:0) %}
 {% for tag in tags %}
-  <a href="{{ site.baseurl}}/tag/{{ tag[0] }}" data-toggle="tooltip" data-placement="right" title="{{ tag[1].size }}">{{tag[0] }}</a> ({{ tag[1].size }})
+	<span class="tag-cloud-size-{{ tag[1].size | times: 5 | minus: 1 | divided_by: 13 }}" ><a href="{{site.baseurl}}/tag/{{ tag[0] }}">{{tag[0] }}</a> ({{ tag[1].size }})</span>
 {% endfor %}
