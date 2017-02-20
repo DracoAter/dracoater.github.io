@@ -3,9 +3,9 @@ layout: post
 title: Create an Lxd Container With Chef
 author: Juri Timošin
 tags:
-  - Lxd
-  - Chef
-  - Test Kitchen
+- lxd
+- chef
+- test-kitchen
 ---
 
 Before going further to running integration tests on your cookbooks and roles we need to prepare a
@@ -14,7 +14,7 @@ container with Chef installed and a running ssh server (required for Test Kitche
 
 <!--more-->
 
-{% highlight bash lineno %}
+{% highlight bash linenos %}
 #!/bin/bash
 
 codename=xenial

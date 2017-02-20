@@ -4,11 +4,9 @@ title: Testing Chef Cookbooks. Part 1. Foodcritic.
 date: '2013-09-17T11:41:00.000+03:00'
 author: Juri Timošin
 tags:
-- testing
-- Chef
+- chef
 - foodcritic
-- gem
-- Ruby
+- ruby
 modified_time: '2013-09-23T14:50:13.134+03:00'
 blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-3595062972362814103
 blogger_orig_url: http://dracoater.blogspot.com/2013/09/testing-chef-cookbooks-part-1-foodcritic.html

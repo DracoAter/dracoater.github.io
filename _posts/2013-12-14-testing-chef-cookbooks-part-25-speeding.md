@@ -4,11 +4,10 @@ title: Testing Chef Cookbooks. Part 2.5. Speeding Up ChefSpec Run
 date: '2013-12-14T15:47:00.000+02:00'
 author: Juri Timošin
 tags:
-- testing
-- Chef
+- chef
 - chefspec
-- RSpec
-- Ruby
+- rspec
+- ruby
 modified_time: '2014-01-04T13:27:58.271+02:00'
 blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-1232515208708780825
 blogger_orig_url: http://dracoater.blogspot.com/2013/12/testing-chef-cookbooks-part-25-speeding.html

@@ -6,7 +6,7 @@ author: Juri Timošin
 tags:
 - tar
 - gzip
-- Ruby
+- ruby
 modified_time: '2013-10-03T14:13:46.682+03:00'
 blogger_id: tag:blogger.com,1999:blog-360329120074358364.post-6121417887019689343
 blogger_orig_url: http://dracoater.blogspot.com/2013/10/extracting-files-from-targz-with-ruby.html
