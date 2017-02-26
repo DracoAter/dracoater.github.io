@@ -13,11 +13,8 @@
                   <i class="fa fa-calendar"></i>
                   <time>{{ page.date | date_to_string }}</time>
                 </div>
-                <ul>
-                  {% for tag in page.tags %}
-                    <li><a href="{{ site.url | append:site.baseurl }}/tag/{{ tag }}">{{ tag }}</a></li>
-                  {% endfor %}
-                </ul>
+								{% assign tags = page.tags %}
+								{% include tags-line.html %}
               </div>
               <div class="post-content">
                 <div id="toc" class="toc"></div>
