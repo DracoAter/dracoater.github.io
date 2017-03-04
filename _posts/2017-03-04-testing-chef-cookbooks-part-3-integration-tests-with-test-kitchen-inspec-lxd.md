@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Testing Chef Cookbooks. Part 3: integration tests with Test Kitchen, Inspec, Lxd.
+title: "Testing Chef Cookbooks. Part 3: Integration Tests With Test Kitchen, Inspec, Lxd."
 date: '2017-03-04T20:01:00.000+02:00'
 author: Juri Timošin
 tags:
