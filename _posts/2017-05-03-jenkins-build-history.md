@@ -24,7 +24,7 @@ So we decided to build it ourselves. We are already using [Telegraf][1] for moni
 provides the information we require through API, so all we had to do is to make a new kind of
 request to Jenkins Master. The API url is:
 
-{% highlight url %}
+{% highlight none %}
 http://<jenkinsserver>/computer/api/json?tree=computer[displayName,oneOffExecutors[number,currentExecutable[fullDisplayName]],executors[number,currentExecutable[fullDisplayName]]]
 {% endhighlight %}
 
@@ -40,7 +40,7 @@ to know what build runs when and on what machine.
 The parsed data gets written into the database so that node, job, build and config are used as tags
 and the only metric data is the executor number:
 
-{% highlight %}
+{% highlight none %}
 jenkins.build,node=marine,job=my-test-job-1,build=132,config=ubuntu\,clean executor=0
 jenkins.build,node=tank,job=my-test-job-2,build=12,config=ubuntu executor=-1
 {% endhighlight %}
