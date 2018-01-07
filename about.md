@@ -8,7 +8,7 @@ title: About
 
 {% avatar DracoAter %}
 
-I work as a infrastructure engineer at Malwarebytes, in Tallinn, Estonia. A started my career in
+I work as a Senior IT DevOps Engineer at Malwarebytes, in Tallinn, Estonia. A started my career in
 2006 and worked for about 2.5 years as a Ruby on Rails developer. Next 2.5 years I worked with
 C# and .Net frameworks. For next 6.5 years I was responsible for Jenkins cluster of more than
 50 machines (> 350 executors). Currently I am supporting several teams with providing deployment
