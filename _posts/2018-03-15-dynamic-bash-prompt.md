@@ -19,16 +19,16 @@ Bash has some [special environment variables][1], which are responsible for the 
 Those are PS1, PS2, PS3, PS4 and PROMPT\_COMMAND. We can set our prompt by changing the value of
 the PS1 environment variable, for example like that:
 
-```bash
+{% highlight console %}
 $ export PS1="My new prompt> "
-```
+{% endhighlight %}
 
 But this only assigns the prompt statically. What we actually need is, assigning dynamically,
 based on what our current working directory is. For that the PROMPT\_COMMAND variable is
 responsible. Its value is interpreted as a command to execute before the printing of each primary
 prompt ($PS1). PS1 variable is set in your ~/.bashrc, so what I did is added some code there:
 
-```diff
+{% highlight diff linenos %}
 +PROMPT_COMMAND=scm_prompt
 +
 +scm_prompt(){
@@ -48,11 +48,11 @@ prompt ($PS1). PS1 variable is set in your ~/.bashrc, so what I did is added som
 +  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w${scm}\$ '
  fi
  unset color_prompt force_color_prompt
-```
+{% endhighlight diff %}
 
 Now, if current directory contains `.git` or `.hg` directories, then I will see the current scm
 and branch I am on in bash prompt.
 
-```
+{% highlight console %}
 jt@ratchet:~/projects/dotfiles hg(default)$
-```
+{% endhighlight %}
