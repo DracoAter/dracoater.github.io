@@ -1,4 +1,4 @@
-{% if page.share == true %}
+{% if (page.share == nil and site.share) or page.share %}
 
 <div class="share-bar">
   <ul class="share-buttons">
@@ -6,8 +6,8 @@
     <li class="share-facebook">
       <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url | append: page.url}}" target="_blank" title="Share on Facebook">
         <span class="fa-stack fa-lg">
-          <i class="fa fa-square-o fa-stack-2x"></i>
-          <i class="fa fa-facebook fa-stack-1x"></i>
+          <i class="far fa-square fa-stack-2x"></i>
+          <i class="fab fa-facebook-f fa-stack-1x"></i>
         </span>
       </a>
     </li>
