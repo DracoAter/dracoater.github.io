@@ -1,4 +1,4 @@
-{% if page.comments != false and site.comments %}
+{% if (page.comments == nil and site.comments) or page.comments %}
 <!-- Add Disqus comments. -->
 <div id="disqus_thread"></div>
 <script type="text/javascript">

@@ -116,10 +116,10 @@ ul.share-buttons {
     display: inline-block;
     .fa-facebook-f,
     .fa-twitter,
-    .fa-google-plus,
-    .fa-linkedin,
-    .fa-envelope-o,
-    .fa-pinterest {
+    .fa-google-plus-g,
+    .fa-linkedin-in,
+    .fa-pinterest-p,
+    .fa-envelope {
       color: #ffffff
     }
     a {
@@ -133,20 +133,29 @@ ul.share-buttons {
     transition: transform .4s;
   }
 
+  // No Frame
+  //li.share-facebook .fa-facebook { color: #3B5998;}
+  //li.share-twitter .fa-twitter { color: #55acee;}
+  //li.share-google-plus .fa-google-plus { color: #dd4b39;}
+  //li.share-linkedin .fa-linkedin { color: #4875B4;}
+  //li.share-pinterest .fa-pinterest { color: #BD081C;}
+  //li.share-envelope .fa-envelope { color: #3B5998;}
+
   // Square frame
-  li.share-facebook .fa-square { color: #3B5998;}
-  li.share-twitter .fa-square { color: #55acee;}
-  li.share-google-plus .fa-square { color: #dd4b39;}
-  li.share-linkedin .fa-square { color: #4875B4;}
-  li.share-pinterest .fa-square { color: #BD081C;}
-  li.share-envelope .fa-square { color: #3B5998;}
+  //li.share-facebook .fa-square { color: #3B5998;}
+  //li.share-twitter .fa-square { color: #55acee;}
+  //li.share-google-plus .fa-square { color: #dd4b39;}
+  //li.share-linkedin .fa-square { color: #4875B4;}
+  //li.share-pinterest .fa-square { color: #BD081C;}
+  //li.share-envelope .fa-square { color: #3B5998;}
+
   // Circle frame
-  li.share-facebook .fa-circle-thin { color: #3B5998;}
-  li.share-twitter .fa-circle-thin { color: #55acee;}
-  li.share-google-plus .fa-circle-thin { color: #dd4b39;}
-  li.share-linkedin .fa-circle-thin { color: #4875B4;}
-  li.share-pinterest .fa-circle-thin { color: #BD081C;}
-  li.share-envelope .fa-circle-thin { color: #3B5998;}
+  li.share-facebook .fa-circle { color: #3B5998;}
+  li.share-twitter .fa-circle { color: #55acee;}
+  li.share-google-plus .fa-circle { color: #dd4b39;}
+  li.share-linkedin .fa-circle { color: #4875B4;}
+  li.share-pinterest .fa-circle { color: #BD081C;}
+  li.share-envelope .fa-circle { color: #3B5998;}
 
   li:hover {
     -webkit-transform: scale(1.3,1.3);

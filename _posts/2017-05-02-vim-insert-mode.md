@@ -16,4 +16,4 @@ english-speaking friends, the talk is in Russian.
 
 <!--more-->
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xAL9scgNcCA" frameborder="0" allowfullscreen />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xAL9scgNcCA" frameborder="0" allowfullscreen></iframe>
