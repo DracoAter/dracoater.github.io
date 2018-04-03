@@ -1,0 +1,16 @@
+<div class="post-meta">
+	<div class="post-time">
+		<i class="far fa-calendar-alt"></i>
+		<time datetime='{{ include.date | date: "%Y-%m-%d" }}'>{{ include.date | date_to_string }}</time>
+	</div>
+	{% if include.tags %}
+	{% assign sorted_tags = (include.tags | sort) %}
+	<ul>
+	{% for tag in sorted_tags %}
+		<span class="tag">
+			<a href="/tags#{{ tag | cgi_escape }}">{{ tag }}</a>
+		</span>
+	{% endfor %}
+	</ul>
+	{% endif %}
+</div>
