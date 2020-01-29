@@ -8,6 +8,7 @@
 	<ul>
 	{% for tag in sorted_tags %}
 		<span class="tag">
+			<i class="fas fa-tag"></i>
 			<a href="/tags#{{ tag | cgi_escape }}">{{ tag }}</a>
 		</span>
 	{% endfor %}

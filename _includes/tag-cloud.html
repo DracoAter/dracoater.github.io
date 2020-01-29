@@ -2,6 +2,7 @@
 {% assign tags = (site.tags | sort:0) %}
 {% for tag in tags %}
 <span class="tag" style="font-size:{{ tag[1].size | times: 0.5 | divided_by: 5 | plus: 0.8 }}em" >
+	<i class="fas fa-tag"></i>
 	<a href="/tags#{{ tag[0] | cgi_escape }}">{{tag[0] }}</a> ({{ tag[1].size }})
 </span>
 {% endfor %}

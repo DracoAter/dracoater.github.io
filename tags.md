@@ -10,6 +10,7 @@ title: Tags
 		{% assign sorted_tags = site.tags | sort %}
 		{% for tag in sorted_tags %}
 		<span class="tag">
+			<i class="fas fa-tag"></i>
 			<a href="/tags#{{ tag[0] | uri_escape }}">{{ tag[0] }}</a> ({{ tag[1].size }})
 		</span>
 		{% endfor %}

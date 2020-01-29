@@ -175,12 +175,6 @@ ul.share-buttons {
 }
 ul.sideBarTags {
   list-style: none;
-  li:before {
-    content: '\f02b';
-    font-family: 'FontAwesome';
-    float: left;
-    margin-left: -1.5em;
-  }
 }
 
 //********************************************************
@@ -371,11 +365,6 @@ nav.shrink .navbar-toggle {
 	padding: 0 .2em;
 	margin-right: .2em;
 	white-space: nowrap;
-}
-
-.tag:before {
-  content: '\f02b';
-  font-family: 'FontAwesome';
 }
 
 .offset:before {
