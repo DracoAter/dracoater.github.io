@@ -1,6 +1,6 @@
 <div class="post-meta">
 	<div class="post-time">
-		<i class="far fa-calendar-alt"></i>
+		<i class="lar la-calendar-alt"></i>
 		<time datetime='{{ include.date | date: "%Y-%m-%d" }}'>{{ include.date | date_to_string }}</time>
 	</div>
 	{% if include.tags %}
@@ -8,7 +8,7 @@
 	<ul>
 	{% for tag in sorted_tags %}
 		<span class="tag">
-			<i class="fas fa-tag"></i>
+			<i class="las la-tag"></i>
 			<a href="/tags#{{ tag | cgi_escape }}">{{ tag }}</a>
 		</span>
 	{% endfor %}
