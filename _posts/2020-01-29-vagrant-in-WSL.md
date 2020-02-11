@@ -6,6 +6,7 @@ tags:
 - test-kitchen
 - vagrant
 - virtualbox
+- wsl
 - windows
 ---
 
@@ -90,5 +91,5 @@ this stuff or provide a better path. Adding this line to the `kitchen.yml` does 
 ```yaml
 driver:
   name: vagrant
-  cached_folder: false # added line
+  cache_directory: false # added line
 ```
