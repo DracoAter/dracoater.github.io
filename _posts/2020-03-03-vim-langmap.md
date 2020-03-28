@@ -22,7 +22,7 @@ When in Normal mode the 'langmap' option takes care of translating a character i
 layout to the original meaning of the key. So I added the following line into my `.vimrc`.
 
 ```
-set langmap=йЙцЦуУкКеЕнНгГшШщЩзЗхХъЪфФыЫвВаАпПрРоОлЛдДжЖэЭ\/яЯчЧсСмМиИтТьЬбБюЮ.\,;qQwWeErRtTyYuUiIoOpP[{]}aAsSdDfFgGhHjJkKlL\;:'"\\|zZxXcCvVbBnNmM\,<.>/?
+set langmap=йЙцЦуУкКеЕнНгГшШщЩзЗхХъЪфФыЫвВаАпПрРоОлЛдДжЖэЭяЯчЧсСмМиИтТьЬбБюЮ.\\,;qQwWeErRtTyYuUiIoOpP[{]}aAsSdDfFgGhHjJkKlL;:'\"zZxXcCvVbBnNmM\\,<.>/?
 ```
 
 Yes, you need to map both small and capital letters. Now I don't have to switch from RU to US in
