@@ -55,6 +55,12 @@ PS> notepad.exe $PROFILE
 Add the following lines into the editor and save:
 
 ```ps
+# Removing default aliases provided by Powershell, as they conflict with my new aliases for git
+# Remove-Alias` does not work, as they are "constant or read-only".
+Remove-Item -Force Alias:gc
+Remove-Item -Force Alias:gl
+Remove-Item -Force Alias:gps
+
 function gfmp{git fetch -p; git checkout master; git pull}
 # @args you can pass multi arguments for example
 # ga fileName1 fileName2 
@@ -71,21 +77,3 @@ function gld{git log --format="%C(auto)%h %d %ad %<(10,trunc)%al %s" --graph --a
 ```
 
 Now when you start the new powershell window, you will be able to use the new aliases for git.
-
-### Except...
-
-Because I got used to those aliases (in bash), I don't want to change them. But Powershell already
-has default aliases defined for some of them, like `gc -> Get-Content` and `gl -> Get-Location`.
-And they prevail on my custom functions.
-
-Btw, to list all existing aliases you can run `Get-Alias`.
-
-Removing those default aliases with `Remove-Alias` does not work, as they are "constant or
-read-only". But there is a way:
-
-```ps
-PS> Remove-Item -Force Alias:gl
-PS> Remove-Item -Force Alias:gc
-```
-
-And voila!
